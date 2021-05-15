@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDFC EMI</title>
+    <style>
+        *{
+            font-size: 20px;
+        }
+        .wrapper{ /* parent div*/
+           border:1px solid green;
+           background-color: #fff;
+        }
+        div{
+            padding:10px;
+            margin:10px;
+        }
+        #text1{
+            border:1px solid black;
+            width:150px;
+        }
+        .container{
+            display:flex;
+            flex-wrap: wrap;
+        }
+        .emi{
+            width:30%;
+            border:1px solid grey;
+            border-radius:5px;
+        }
+        input{
+            width:100%;
+        }
+        button{
+            background-color: darkblue;
+            color:white;
+            border-radius: 5px;
+            padding:5px;
+        }
+        body{
+            background-color: grey;
+        }
+        .loanlbl,.timelbl,.interestlbl{
+            display:flex;
+            justify-content: space-between;
+        }
+        #text1,#text2,#text3{
+            border:1px solid black;
+            border-radius: 3px;
+            padding:5px;
+            width:15px;
+        }
+        #yourEmi{
+            font-size: 20px;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+    <div class="container">
+        <!-- for loan amount-->
+        <div class="emi emi1">
+         <div><span> Amount you need</span>    <span id="text1"> &#8377; </span></div> 
+            <input type="range" min="0" max="100000" step="100" name="amount" id="amount" oninput="f1()">
+            <div class="loanlbl"><span>0</span>  <span>100000</span> </div>
+        </div> <!-- load amount div end here-->
+        <!-- for time period-->
+        <div class="emi emi2"> 
+       <div> <span>for</span> <span id="text2">0</span>  <span>years</span></div> 
+        <input type="range" min="0" max="5" step="1" name="year" id="year" oninput="f2()"> 
+        <div class="timelbl"><span>0 year</span>  <span>5 years</span></div>
+        </div><!-- time period div end here -->
+        <!-- for interest rate-->
+        <div class="emi emi3">
+      <div> <span>interest rate</span>   <span id="text3"></span>% </div> 
+        <input type="range" min="10" max="21" step="0.1" name="rate" id="rate" oninput="f3()">
+        <div class="interestlbl"><span>10</span>  <span>21</span></div>
+        </div> <!-- interest rate div end here-->
+    </div>
+    <button onclick="emiCalculator()"> calculate</button>
+    <div >your monthly EMI will be <span id="yourEmi">&#8377; </span></div>
+</div>
+    <script> 
+        // for loan amount  @  p
+        var amountRange = document.getElementById("amount");
+        var labelText1 = document.getElementById("text1");
+        labelText1.innerHTML += amountRange.value; // to stay constantly
+        var lbl1 = amountRange.value;
+         function f1(){
+            labelText1.innerHTML += amountRange.value;
+         }
+         // for time period @ n
+         var yearRange = document.getElementById("year");
+         var labelText2 = document.getElementById("text2");
+         labelText2.innerHTML = yearRange.value; // to stay constantly
+         var lbl2 = yearRange.value;
+         function f2(){
+            labelText2.innerHTML = yearRange.value;
+         }
+         // for  interest rate @ r
+         var rateRange = document.getElementById("rate");
+         var labelText3 = document.getElementById("text3");
+         labelText3.innerHTML = rateRange.value;// to stay constantly
+         var lbl3 = rateRange.value;
+         function f3(){
+            labelText3.innerHTML = rateRange.value;
+         }
+         // emi calculator
+         function emiCalculator(){
+            // var lbl1 = document.getElementById("text1").innerHTML;
+            var p = lbl1;
+         var n = lbl2 *12;
+         var r = lbl3/12/100;
+         var emi = p* r*(1+r)**n/((1+r)**n-1);
+         var emi1= Math.round(emi);
+         document.getElementById("yourEmi").innerHTML += ` ${emi1} `;
+         }
+    </script>
+</body>
+</html>
